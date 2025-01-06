@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebAPI.Common;
+using WebAPIServices.Interface;
 
 namespace WebAPI.Controllers
 {
@@ -9,19 +10,23 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        public CustomerController() { }
+        private ICustomersService _customersService;
+        public CustomerController(ICustomersService customersService) 
+        {
+            this._customersService = customersService;
+        }
 
         [HttpGet]
         [Route("customers")]
         public string GetAllCustomers()
         {
-
+            var result = this._customersService.GetCustomers();
 
             return JsonConvert.SerializeObject(new ResponseParameter()
             { 
                 Success = true,
                 Code = "200",
-                Content = new { }
+                Content = result
             });
         }
 

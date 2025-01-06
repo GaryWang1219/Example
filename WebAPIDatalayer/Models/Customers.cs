@@ -1,4 +1,4 @@
-﻿namespace WebAPIDatalayer.models
+﻿namespace WebAPIDatalayer.Models
 {
     public class Customers
     {
