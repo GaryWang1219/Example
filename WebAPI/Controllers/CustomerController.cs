@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using WebAPI.Common;
+using WebAPIDatalayer.Models;
+using WebAPIServices.Common;
 using WebAPIServices.Interface;
 
 namespace WebAPI.Controllers
@@ -21,61 +22,39 @@ namespace WebAPI.Controllers
         public string GetAllCustomers()
         {
             var result = this._customersService.GetCustomers();
-
-            return JsonConvert.SerializeObject(new ResponseParameter()
-            { 
-                Success = true,
-                Code = "200",
-                Content = result
-            });
+            return JsonConvert.SerializeObject(result);
         }
 
         [HttpGet]
         [Route("customers/{id}")]
-        public string GetCustomer(int id)
+        public string GetCustomer([FromRoute]string id)
         {
-            return JsonConvert.SerializeObject(new ResponseParameter()
-            {
-                Success = true,
-                Code = "200",
-                Content = new { }
-            });
+            var result = _customersService.GetCustomersById(id);
+            return JsonConvert.SerializeObject(result);
         }
 
         [HttpPost]
         [Route("customers")]
-        public string InsertCustomer()
+        public string InsertCustomer(Customers customer)
         {
-            return JsonConvert.SerializeObject(new ResponseParameter()
-            {
-                Success = true,
-                Code = "200",
-                Content = new { }
-            });
+            var result = _customersService.InsertCustomers(customer);
+            return JsonConvert.SerializeObject(result);
         }
 
         [HttpPut]
-        [Route("customers/{id}")]
-        public string UpdateCustomer(int id)
+        [Route("customers")]
+        public string UpdateCustomer(Customers customer)
         {
-            return JsonConvert.SerializeObject(new ResponseParameter()
-            {
-                Success = true,
-                Code = "200",
-                Content = new { }
-            });
+            var result = _customersService.UpdateCustomers(customer);
+            return JsonConvert.SerializeObject(result);
         }
 
         [HttpDelete]
         [Route("customers/{id}")]
-        public string DeleteCustomer(int id)
+        public string DeleteCustomer([FromRoute] string id)
         {
-            return JsonConvert.SerializeObject(new ResponseParameter()
-            {
-                Success = true,
-                Code = "200",
-                Content = new { }
-            });
+            var result = _customersService.DeleteCustomers(id);
+            return JsonConvert.SerializeObject(result);
         }
     }
 }
